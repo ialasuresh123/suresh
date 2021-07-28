@@ -1,5 +1,6 @@
 package com.org.bank.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.sun.istack.NotNull;
+
 @Entity
 public class UserTransaction {
 	@Id
@@ -18,15 +21,19 @@ public class UserTransaction {
 	private Integer Id;
 	@OneToOne
 	@JoinColumn(name = "transaction_TypeId_Id")
+	@NotNull
 	private Transaction_Type transaction_type;
-	private Date transaction_date_time;
-    private Integer userId;
+	@NotNull
+	private LocalDate transaction_date_time;
+	
+	private Integer UserId;
+
 	public Integer getId() {
 		return Id;
 	}
 
 	public void setId(Integer id) {
-		this.Id = id;
+		Id = id;
 	}
 
 	public Transaction_Type getTransaction_type() {
@@ -37,36 +44,32 @@ public class UserTransaction {
 		this.transaction_type = transaction_type;
 	}
 
-	public Date getTransaction_date_time() {
+	public LocalDate getTransaction_date_time() {
 		return transaction_date_time;
 	}
 
-	public void setTransaction_date_time(Date transaction_date_time) {
+	public void setTransaction_date_time(LocalDate transaction_date_time) {
 		this.transaction_date_time = transaction_date_time;
-	}
-
-	public UserTransaction(Integer id, Transaction_Type transaction_type, Date transaction_date_time, User user) {
-		super();
-		this.Id = id;
-		this.transaction_type = transaction_type;
-		this.transaction_date_time = transaction_date_time;
-
 	}
 
 	public Integer getUserId() {
-		return userId;
+		return UserId;
 	}
 
 	public void setUserId(Integer userId) {
-		userId = userId;
+		UserId = userId;
 	}
 
-	public UserTransaction(Integer id, Transaction_Type transaction_type, Date transaction_date_time, Integer userId) {
+	public UserTransaction( Transaction_Type transaction_type, LocalDate transaction_date_time,
+			Integer userId) {
 		super();
-		Id = id;
+		
 		this.transaction_type = transaction_type;
 		this.transaction_date_time = transaction_date_time;
-		this.userId = userId;
+		UserId = userId;
 	}
+
+	
+
 
 }

@@ -1,6 +1,7 @@
 package com.org.bank.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,10 @@ import com.org.bank.model.UserTransaction;
   public interface TransactionRepository extends JpaRepository<UserTransaction,
   Integer>{
   
-  List<UserTransaction> findByUserId(Integer userId, PageRequest pageRequest);
+  Optional<List<UserTransaction>> findByUserId(Integer userId, PageRequest pageRequest);
+
+
+
   
   
   

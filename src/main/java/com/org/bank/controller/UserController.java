@@ -1,11 +1,13 @@
 package com.org.bank.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +29,7 @@ import com.org.bank.model.User;
 import com.org.bank.model.UserTransaction;
 import com.org.bank.service.BalanceService;
 import com.org.bank.service.TransactionService;
-import com.org.bank.service.UserRegistractionService;
+
 import com.org.bank.service.UserService;
 import com.org.bank.utility.JWTUtility;
 
@@ -68,31 +70,30 @@ public class UserController {
 	}
 
 	@PostMapping("/addBalance/{userId}")
-	public String addBalance(@RequestParam Double amount, @PathVariable Integer userId) throws Exception {
-		return balanceService.addBalance(amount, userId);
+	public ResponseEntity<String> addBalance(@RequestParam Double amount, @PathVariable Integer userId) throws Exception {
+		return new ResponseEntity<> (balanceService.addBalance(amount, userId),HttpStatus.OK);
 	}
-
 	@GetMapping("/showAvailabalance/{userId}")
-	public Double showAvailableBalance(@PathVariable Integer UserId) throws Exception {
-		return balanceService.showAvailableBalance(UserId);
+	public ResponseEntity<Double> showAvailableBalance(@PathVariable Integer UserId) throws Exception {
+		return new ResponseEntity<> (balanceService.showAvailableBalance(UserId),HttpStatus.OK) ;
 
 	}
 
 	@PostMapping("/withdraw/{userId}")
-	public ResponseEntity<ResponseWithdrawAmount> withdrawAmount(@RequestParam Double amount,
-			@PathVariable Integer userId) throws UserDetailsNotFoundException, InsufficientBalanceException {
+	public ResponseEntity<ResponseWithdrawAmount> withdrawAmount(@RequestParam Integer amount,
+			@PathVariable Integer userId) throws Exception {
 		ResponseWithdrawAmount response = balanceService.checkAvailabilityOfBalance(amount, userId);
-		return null;
+		return  new ResponseEntity<> (response,HttpStatus.OK);
 
 	}
 
 	@GetMapping("/findTransaction/{userId}")
-	public ResponseEntity<List<UserTransaction>> findTransactions(@PathVariable Integer userId) {
+	public ResponseEntity<Optional<List<UserTransaction>>> findTransactions(@PathVariable Integer userId) throws UserDetailsNotFoundException {
 
-		List<UserTransaction> transactions = transactionService.findByUserId(userId,
+		Optional<List<UserTransaction>> transactions = transactionService.findByUserId(userId,
 				PageRequest.of(0, 6, Direction.ASC, "Id"));
 
-		return null;
+		return  new ResponseEntity<> (transactions,HttpStatus.OK);
 	}
 
 }

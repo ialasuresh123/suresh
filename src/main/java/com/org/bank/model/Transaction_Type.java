@@ -37,4 +37,8 @@ public class Transaction_Type {
 		this.typeOfTransaction = typeOfTransaction;
 	}
 
+	public Transaction_Type() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

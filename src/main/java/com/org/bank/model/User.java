@@ -1,7 +1,10 @@
 package com.org.bank.model;
 
-import java.util.Date;
 
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,14 +12,25 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.sun.istack.NotNull;
+
+
+
+
 @Entity
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
+	@NotNull
 	private String userName;
-	private Date dateOfBirth;
+	@NotNull
+	private LocalDate dateOfBirth;
+	@NotNull
 	private String address;
+	@NotNull
+	@Column(length=10)
+	//@Size(max=10, min=10)
 	private String mobileNumber;
 
 
@@ -39,11 +53,11 @@ public class User {
 		this.userName = userName;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -63,10 +77,10 @@ public class User {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public User(Integer userId, String userName, Date dateOfBirth, String address, String mobileNumber) {
+	public User(Integer userId, String userName, LocalDate dateOfBirth, String address, String mobileNumber) {
 		super();
 		this.userId = userId;
-		userName = userName;
+		this.userName = userName;
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 		this.mobileNumber = mobileNumber;

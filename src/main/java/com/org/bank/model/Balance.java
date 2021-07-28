@@ -5,17 +5,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.sun.istack.NotNull;
+
 @Entity
 public class Balance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer Id;
+	@NotNull
 	private Integer userId;
+	@NotNull
 	private Double avaiableBalance;
 
 	public Integer getId() {
 		return Id;
 	}
+	
 
 	public void setId(Integer id) {
 		this.Id = id;
